@@ -1,11 +1,12 @@
 package controller
 
 import (
+	"strconv"
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/naiba/nezha/pkg/mygin"
 	"github.com/naiba/nezha/service/singleton"
-	"strconv"
-	"strings"
 )
 
 type apiV1 struct {
@@ -15,14 +16,16 @@ type apiV1 struct {
 func (v *apiV1) serve() {
 	r := v.r.Group("")
 	// API
-	r.Use(mygin.Authorize(mygin.AuthorizeOption{
-		Member:   true,
-		IsPage:   false,
-		AllowAPI: true,
-		Msg:      "访问此接口需要认证",
-		Btn:      "点此登录",
-		Redirect: "/login",
-	}))
+	if !singleton.Conf.Local {
+		r.Use(mygin.Authorize(mygin.AuthorizeOption{
+			Member:   true,
+			IsPage:   false,
+			AllowAPI: true,
+			Msg:      "访问此接口需要认证",
+			Btn:      "点此登录",
+			Redirect: "/login",
+		}))
+	}
 	r.GET("/server/list", v.serverList)
 	r.GET("/server/details", v.serverDetails)
 

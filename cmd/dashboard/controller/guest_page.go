@@ -18,13 +18,15 @@ type guestPage struct {
 
 func (gp *guestPage) serve() {
 	gr := gp.r.Group("")
-	gr.Use(mygin.Authorize(mygin.AuthorizeOption{
-		Guest:    true,
-		IsPage:   true,
-		Msg:      "您已登录",
-		Btn:      "返回首页",
-		Redirect: "/",
-	}))
+	if !singleton.Conf.Local {
+		gr.Use(mygin.Authorize(mygin.AuthorizeOption{
+			Guest:    true,
+			IsPage:   true,
+			Msg:      "您已登录",
+			Btn:      "返回首页",
+			Redirect: "/",
+		}))
+	}
 
 	gr.GET("/login", gp.login)
 

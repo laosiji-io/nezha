@@ -25,13 +25,16 @@ type memberAPI struct {
 
 func (ma *memberAPI) serve() {
 	mr := ma.r.Group("")
-	mr.Use(mygin.Authorize(mygin.AuthorizeOption{
-		Member:   true,
-		IsPage:   false,
-		Msg:      "访问此接口需要登录",
-		Btn:      "点此登录",
-		Redirect: "/login",
-	}))
+
+	if !singleton.Conf.Local {
+		mr.Use(mygin.Authorize(mygin.AuthorizeOption{
+			Member:   true,
+			IsPage:   false,
+			Msg:      "访问此接口需要登录",
+			Btn:      "点此登录",
+			Redirect: "/login",
+		}))
+	}
 
 	mr.GET("/search-server", ma.searchServer)
 	mr.GET("/search-tasks", ma.searchTask)

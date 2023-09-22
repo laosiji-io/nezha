@@ -74,6 +74,7 @@ func (c *AgentConfig) Save() error {
 
 // Config 站点配置
 type Config struct {
+	Local    bool   // 本地模式
 	Debug    bool   // debug模式开关
 	Language string // 系统语言，默认 zh-CN
 	Site     struct {
