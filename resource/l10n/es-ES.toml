@@ -217,6 +217,9 @@ other = "Einstein - Velocidad de la luz 1"
 [DisplayIndex]
 other = "Índice de visualización"
 
+[TheLargerTheNumberTheLowerThePriority]
+other = "Los números más pequeño se mostrarán primero"
+
 [TheLargerTheNumberTheHigherThePriority]
 other = "Los números más grandes se mostrarán primero"
 

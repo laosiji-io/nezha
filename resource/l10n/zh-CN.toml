@@ -217,6 +217,9 @@ other = "爱因斯坦-光速1号"
 [DisplayIndex]
 other = "排序"
 
+[TheLargerTheNumberTheLowerThePriority]
+other = "越小越靠前"
+
 [TheLargerTheNumberTheHigherThePriority]
 other = "越大越靠前"
 

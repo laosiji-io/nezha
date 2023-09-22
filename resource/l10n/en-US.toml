@@ -217,6 +217,9 @@ other = "Einstein Light Speed 1"
 [DisplayIndex]
 other = "Display Index"
 
+[TheLargerTheNumberTheLowerThePriority]
+other = "Lower numbers will be displayed first"
+
 [TheLargerTheNumberTheHigherThePriority]
 other = "Greater numbers will be displayed first"
 
