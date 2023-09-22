@@ -15,7 +15,8 @@ func init() {
 	// 初始化 dao 包
 	singleton.InitConfigFromPath("data/config.yaml")
 	singleton.InitTimezoneAndCache()
-	singleton.InitDBFromPath("data/sqlite.db")
+	// singleton.InitDBFromPath("data/sqlite.db")
+	singleton.InitDB()
 	singleton.InitLocalizer()
 	initSystem()
 }

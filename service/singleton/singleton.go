@@ -1,10 +1,12 @@
 package singleton
 
 import (
+	"fmt"
 	"log"
 	"time"
 
 	"github.com/patrickmn/go-cache"
+	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
@@ -46,6 +48,60 @@ func InitConfigFromPath(path string) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+// 初始化数据库
+func InitDB() {
+	dbtype := Conf.Database.Dbtype
+	if dbtype == "mysql" {
+		// host := "127.0.0.1"
+		// port := 33067
+		// username := "root"
+		// password := "nezha123"
+		// dbname := "nezha"
+		// charset := "utf8mb4"
+		// timeout := "10s"
+		dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local&timeout=%s",
+			Conf.Database.Username,
+			Conf.Database.Password,
+			Conf.Database.Host,
+			Conf.Database.Port,
+			Conf.Database.Dbname,
+			Conf.Database.Charset,
+			Conf.Database.Timeout,
+		)
+		InitDBFromMysql(dsn)
+	} else {
+		InitDBFromPath("data/sqlite.db")
+	}
+}
+
+// InitDBFromMysql 加载 Mysql 数据库
+func InitDBFromMysql(dsn string) {
+	// gorm:gorm@tcp(127.0.0.1:13306)/gorm?charset=utf8mb4&parseTime=True&loc=Local
+	var err error
+	DB, err = gorm.Open(mysql.New(mysql.Config{
+		DSN:                       dsn,   // DSN data source name
+		DefaultStringSize:         256,   // string 类型字段的默认长度
+		DisableDatetimePrecision:  true,  // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
+		DontSupportRenameIndex:    true,  // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
+		DontSupportRenameColumn:   true,  // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
+		SkipInitializeWithVersion: false, // 根据当前 MySQL 版本自动配置
+	}), &gorm.Config{})
+
+	if err != nil {
+		panic(err)
+	}
+	if Conf.Debug {
+		DB = DB.Debug()
+	}
+	err = DB.AutoMigrate(model.Server{}, model.User{},
+		model.Notification{}, model.AlertRule{}, model.Monitor{},
+		model.MonitorHistory{}, model.Cron{}, model.Transfer{}, model.ApiToken{})
+	if err != nil {
+		panic(err)
+	}
+
 }
 
 // InitDBFromPath 从给出的文件路径中加载数据库

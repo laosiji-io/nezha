@@ -98,6 +98,17 @@ type Config struct {
 	ProxyGRPCPort uint
 	TLS           bool
 
+	Database struct {
+		Dbtype   string
+		Host     string
+		Port     uint
+		Username string
+		Password string
+		Dbname   string
+		Charset  string
+		Timeout  string
+	}
+
 	EnablePlainIPInNotification bool // 通知信息IP不打码
 
 	// IP变更提醒
@@ -144,6 +155,20 @@ func (c *Config) Read(path string) error {
 	if c.Location == "" {
 		c.Location = "Asia/Shanghai"
 	}
+
+	if c.Database.Dbtype == "" {
+		c.Database.Dbtype = "sqllite"
+	}
+
+	// fmt.Println(c.Database)
+	// fmt.Println(c.Database.Dbtype)
+	// fmt.Println(c.Database.Host)
+	// fmt.Println(c.Database.Port)
+	// fmt.Println(c.Database.Username)
+	// fmt.Println(c.Database.Password)
+	// fmt.Println(c.Database.Dbname)
+	// fmt.Println(c.Database.Charset)
+	// fmt.Println(c.Database.Timeout)
 
 	c.updateIgnoredIPNotificationID()
 	return nil
