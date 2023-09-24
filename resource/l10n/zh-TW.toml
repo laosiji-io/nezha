@@ -199,11 +199,14 @@ other = "啟用"
 [AddServer]
 other = "添加服務器"
 
-[BatchEditServerGroup]
-other = "批量修改分組"
+[reloadServer]
+other = "重新加载服务器"
 
 [BatchDeleteServer]
 other = "批量删除服务器"
+
+[BatchEditServerGroup]
+other = "批量修改分組"
 
 [InputServerGroupName]
 other = "輸入分組名稱"

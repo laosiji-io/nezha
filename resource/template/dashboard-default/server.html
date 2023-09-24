@@ -5,6 +5,9 @@
     <div class="ui container">
         <div class="ui grid">
             <div class="right floated right aligned twelve wide column">
+                <button class="ui right labeled nezha-primary-btn icon button" onclick="reloadServer()"><i
+                    class="refresh icon"></i> {{tr "reloadServer"}}
+                </button>
                 <button class="ui right labeled nezha-primary-btn icon button" onclick="batchEditServerGroup()"><i
                         class="edit icon"></i> {{tr "BatchEditServerGroup"}}
                 </button>
@@ -138,6 +141,14 @@
                     time: '3',
                     position: 'top-center',
                 });
+            })
+    }
+    function reloadServer() {
+        $.post('/api/server/reload', JSON.stringify({}))
+            .then((resp) => {
+                console.log(resp)
+            }).catch(err => {
+                console.log(err)
             })
     }
     function batchEditServerGroup() {

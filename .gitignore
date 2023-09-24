@@ -17,6 +17,7 @@
 .DS_Store
 /main
 /cmd/dashboard/main
+cmd/dashboard/dashboard
 /config.yml
 /resource/template/theme-custom
 /resource/static/theme-custom

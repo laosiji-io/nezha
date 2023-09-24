@@ -199,11 +199,14 @@ other = "Activar"
 [AddServer]
 other = "Añadir un servidor"
 
-[BatchEditServerGroup]
-other = "Modificación de grupos por lotes"
+[reloadServer]
+other = "Reload Server"
 
 [BatchDeleteServer]
 other = "Batch Delete Server"
+
+[BatchEditServerGroup]
+other = "Modificación de grupos por lotes"
 
 [InputServerGroupName]
 other = "Introduzca un nombre de grupo"

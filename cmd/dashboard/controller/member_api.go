@@ -39,6 +39,7 @@ func (ma *memberAPI) serve() {
 	mr.GET("/search-server", ma.searchServer)
 	mr.GET("/search-tasks", ma.searchTask)
 	mr.POST("/server", ma.addOrEditServer)
+	mr.POST("/server/reload", ma.reloadServer)
 	mr.POST("/monitor", ma.addOrEditMonitor)
 	mr.POST("/cron", ma.addOrEditCron)
 	mr.GET("/cron/:id/manual", ma.manualTrigger)
@@ -291,6 +292,11 @@ type serverForm struct {
 	Tag          string
 	Note         string
 	HideForGuest string
+}
+
+func (ma *memberAPI) reloadServer(c *gin.Context) {
+	singleton.LoadServers()
+	c.JSON(http.StatusOK, singleton.ServerAPI.GetAllList())
 }
 
 func (ma *memberAPI) addOrEditServer(c *gin.Context) {
